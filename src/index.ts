@@ -15,6 +15,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, notebooks: INotebookTracker) => {
     console.log('JupyterLab extension nbactions is activated!');
 
+
+
     // Do something with the current notebook widget
     const currentNotebook = notebooks.currentWidget?.content;
     const sessionContext = notebooks.currentWidget?.sessionContext;
@@ -41,13 +43,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
     NotebookActions.insertBelow(currentNotebook);
 
     // Jupyter.notebook.delete_cell(-1)
-    NotebookActions.deleteCells(currentNotebook);
-
+    NotebookActions.deleteCells(currentNotebook
     // Select the first cell (selection does not have to be contiguous)
     currentNotebook.select(currentNotebook.widgets[0]);
 
     // Clear selection
     currentNotebook.deselectAll();
+  
     // Clear selection with some error handling
     NotebookActions.deselectAll(currentNotebook);
 
@@ -77,6 +79,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
     // Clear all outputs
     // Jupyter.notebook.clear_output() ???
     NotebookActions.clearAllOutputs(currentNotebook);
+    // OR
+    app.commands.execute('notebook:clear-all-cell-outputs');
 
     // Clear selected outputs
     // Jupyter.notebook.clear_cells_outputs(Jupyter.notebook.get_selected_cells_indices())
@@ -84,10 +88,19 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     // Jupyter.notebook.toggle_cells_outputs_scroll(Jupyter.notebook.get_selected_cells_indices())
     NotebookActions.enableOutputScrolling(currentNotebook);
+    // OR
+    app.commands.execute('notebook:enable-output-scrolling');
+
+
     NotebookActions.disableOutputScrolling(currentNotebook);
+    // OR
+    app.commands.execute('notebook:disable-output-scrolling');
 
     // Jupyter.notebook.execute_selected_cells()
     NotebookActions.run(currentNotebook, sessionContext);
+    // OR
+    app.commands.execute('notebook:run-cell')
+
 
     // Jupyter.notebook.save_checkpoint()
     // Jupyter.notebook.save_notebook()
