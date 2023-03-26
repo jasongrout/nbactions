@@ -59,6 +59,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     // Jupyter.notebook.kernel.name
     sessionContext?.session?.kernel?.name;
+    // OR
+    (await app.commands.execute('notebook:get-kernel')).name;
+
 
     // Jupyter.kernelselector.kernelspecs
     // Jupyter.kernel_list.kernelspecs
@@ -66,9 +69,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     // Jupyter.notebook.kernel.interrupt()
     sessionContext?.session?.kernel?.interrupt();
+    // OR
+    app.commands.execute('notebook:interrupt-kernel');
 
     // Jupyter.notebook.kernel.restart()
     sessionContext?.session?.kernel?.restart();
+    // OR
+    app.commands.execute('notebook:restart-kernel');
 
     // Jupyter.notebook.kernel.is_connected()
     sessionContext?.session?.kernel?.connectionStatus === 'connected';
